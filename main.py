@@ -40,6 +40,14 @@ GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions"
 # ML-KEM-768 keypair and AES key are generated here and reused for all requests
 pqc = PQCLayer()
 print("\n✅ Quantum Guard AI Gateway ready — PQC layer initialised\n")
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # ══════════════════════════════════════════════════════════════════════════════
