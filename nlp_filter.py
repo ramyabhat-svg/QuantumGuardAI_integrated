@@ -26,6 +26,7 @@ import os
 import requests
 from dotenv import load_dotenv
 from transformers import pipeline
+import json
 
 load_dotenv()
 
@@ -248,6 +249,20 @@ MODERATE_THRESHOLD = 30
 def compute_leak_score(prompt: str) -> dict:
     score   = 0
     reasons = []
+    try:
+        with open("custom_keywords.json", "r") as f:
+            custom_data = json.load(f)
+            custom_list = custom_data.get("keywords", [])
+        
+        for word in custom_list:
+            if word.strip() and word.lower() in prompt.lower():
+                print(f"🚩 CUSTOM POLICY VIOLATION: Found '{word}'")
+                return {
+                    "score": 100, 
+                    "reasons": [f"Company restricted keyword detected: {word}"]
+                }
+    except Exception as e:
+        print(f"Error reading custom keywords: {e}")
 
     # ── Layer 1: Regex ────────────────────────────────────────────────────────
     patterns_found = pattern_scan(prompt)

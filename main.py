@@ -28,10 +28,26 @@ from dotenv import load_dotenv
 
 from nlp_filter import should_block
 from pqc_layer  import PQCLayer
+import json
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+# Define a simple data model for the incoming JSON
+class KeywordUpdate(BaseModel):
+    keywords: list[str]
+app = FastAPI(title="Quantum Guard AI Gateway")
+@app.post("/update-keywords")
+async def update_keywords(data: KeywordUpdate):
+    try:
+        with open("custom_keywords.json", "w") as f:
+            json.dump({"keywords": data.keywords}, f)
+        return {"status": "success", "message": "Policy updated"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 load_dotenv()
 
-app = FastAPI(title="Quantum Guard AI Gateway")
+
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 GROQ_URL     = "https://api.groq.com/openai/v1/chat/completions"
