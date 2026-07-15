@@ -1,7 +1,7 @@
 # Quantum Guard: AI-Powered Security Gateway
 **Unisys Innovation Program (UIP) Year 17 - Phase 1**  
 **Institution:** R V College of Engineering (RVCE), Bangalore  
-**Team:** Innovative Project Team (GDG/ACM/Coding Club)
+
 
 ## 🚀 Project Overview
 Quantum Guard is a next-generation security gateway designed to intercept and analyze NLP prompts before they reach Large Language Models (LLMs). It integrates **Post-Quantum Cryptography (ML-KEM-768)** to ensure future-proof data encryption and a **BART-based Small Language Model (SLM)** for real-time malicious intent scoring and Explainable AI (XAI) feedback.
